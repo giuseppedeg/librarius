@@ -1,0 +1,10 @@
+pyinstaller > 5.3
+pip install https://github.com/pyinstaller/pyinstaller/archive/develop.zip
+
+# Windows ----
+
+pyinstaller --noconfirm --console --onefile  --icon "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\assets\icon.ico" --add-data "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\www;www/"  "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\GUI.py"
+pyinstaller --noconfirm --windowed --onefile  --icon "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\assets\icon.ico" --add-data "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\www;www/"  "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\GUI.py"
+
+
+# MacOS ------

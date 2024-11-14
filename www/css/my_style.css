@@ -1,0 +1,178 @@
+
+
+#keyword_list{
+    list-style: none;
+    margin: 0;
+    padding-left: 5px;
+}
+
+#keyword_list li {
+    padding-left: 10px;
+    height: 40px;
+    font-size: 25px;
+    position: relative;
+}
+
+#keyword_list li:hover {
+    font-weight: bold;
+    border-left-style: solid;
+    border-left-color: #478ac9 ;
+    border-left-width: 5;
+    cursor: pointer;
+}
+
+#keyword_list li:nth-child(odd) {
+    background-color: aliceblue;
+}
+
+#sec-576b{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+
+/* Terxt Input */
+#text-input-container{
+    margin-top: 5px;;
+}
+
+#text_input_div{
+    margin-top: 8px;
+    width: 100%;
+    display: inline;
+}
+
+#text_input{
+    width: 74%;
+    height: 30px;
+}
+
+#ok_transc_btn{
+    width: 10px;
+    height: 10px;
+    display: inline;
+}
+
+/* Lista Autocompletamento */
+
+.autocomplete {
+    position: relative;
+    display: inline-block;
+}
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    right: 0;
+    left: 0;
+    width: 74%;
+}
+
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: rgba(256,256,256,0.9);
+    border-bottom: 1px solid #d4d4d4; 
+}
+  
+.autocomplete-items div:hover {
+    background-color: rgb(71, 138, 201, 0.9)
+}
+  
+.autocomplete-active {
+    background-color: rgb(71, 138, 201, 0.9) !important; 
+    color: #ffffff; 
+}
+  
+#transcript_textarea{
+    white-space: pre-line;
+}
+
+#transcript_textarea_container{
+  overflow-y: scroll;
+}
+
+
+/* Immagini */
+#row_img_container{
+  overflow-x: scroll;
+  text-align: center;
+  margin-top: 10px;
+  width: 98%;
+  margin-left: 1%;
+}
+
+#img_row{
+  max-height: 150px;
+  min-height: 50px;
+}
+
+#img_word{
+  max-height: 150px;
+
+}
+
+/* Top Menu Bar */
+
+   
+  /* The subnavigation menu */
+  .subnav {
+    float: left;
+    overflow: hidden;
+    height: 40px;
+  }
+  
+  /* Subnav button */
+  .subnav .subnavbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: #000000;
+    padding: 14px 16px;
+    height: 100%;
+    font-family: inherit;
+    margin: 0;
+  }
+  
+  /* Add a red background color to navigation links on hover */
+  .navbar a:hover, .subnav:hover .subnavbtn {
+    background-color: #B2BCC4;
+  }
+  
+  /* Style the subnav content - positioned absolute */
+  .subnav-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    background-color: #B2BCC4;
+    width: 100%;
+    z-index: 1;
+  }
+  
+  /* Style the subnav links */
+  .subnav-content a {
+    float: left;
+    color: black;
+    text-decoration: none;
+    height: 50px;
+    padding-top: 12px;
+    padding-left: 15px;
+  }
+  
+  /* Add a grey background color on hover */
+  .subnav-content a:hover {
+    background-color: #8B9094;
+    color: white;
+  }
+  
+  /* When you move the mouse over the subnav container, open the subnav content */
+  .subnav:hover .subnav-content {
+    display: grid;
+  } 
