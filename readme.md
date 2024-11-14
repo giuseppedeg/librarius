@@ -25,10 +25,6 @@ conda activate librarius
    1.3 `line_segmentation` - here you neet to put the line segmentation files
 
 
-## Perform alignment
-
-1. Run the ```alignment.py``` file to align and get the ```"all_align.als"``` pickle file. Within the file you can set parameters for the process.
-
 ## Run the application
 To run the application you can use the command
 ```console
