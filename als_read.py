@@ -2,7 +2,7 @@ import os
 from utils import load_file, save_file
 
 """
-THe script provide a CML interface to modify direclty a .als file
+The script provide a CML interface to modify direclty a .als file
 """
 
 

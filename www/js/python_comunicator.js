@@ -86,7 +86,7 @@ function show_current_word_img(img_path){
     var timestamp = new Date().getTime();
     document.getElementById("img_word").src=img_path+"?t="+timestamp;
 
-    set_focus_on_textinput();
+    //set_focus_on_textinput();
     window.new_transcriptiKCon = true;
 }
 
