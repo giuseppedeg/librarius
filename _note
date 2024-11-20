@@ -8,3 +8,4 @@ pyinstaller --noconfirm --windowed --onefile  --icon "C:\Users\degreg0000\Deskto
 
 
 # MacOS ------
+pyinstaller GUI.py --noconsole --onefile  --icon "/Users/giuseppe/Desktop/librarius/assets/new_icon/icon.ico" --add-data "/Users/giuseppe/Desktop/librarius/www:www/" 

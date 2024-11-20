@@ -9,7 +9,7 @@ If so, run the command
 ```console
 conda env create -f environment.yml
 ```
-and acrivate the enciroment: 
+and acrivate the enviroment: 
 ```console
 conda activate librarius
 ```
