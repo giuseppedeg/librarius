@@ -14915,22 +14915,22 @@ div.u-video,
   grid-template-columns: repeat(1, 100%);
 }
 @media (min-width: 1400px) {
-  .u-columns-1-xxl .u-popupmenu-items {
+  .u-columns-1-md .u-popupmenu-items {
     grid-template-columns: repeat(1, 100%);
   }
 }
 @media (min-width: 1200px) {
-  .u-xl-mode .u-columns-1-xl .u-popupmenu-items {
+  .u-columns-1-md .u-popupmenu-items {
     grid-template-columns: repeat(1, 100%);
   }
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
-  .u-xxl-mode .u-columns-1-xl .u-popupmenu-items {
+  .u-columns-1-md .u-popupmenu-items {
     grid-template-columns: repeat(1, 100%);
   }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  .u-columns-1-lg .u-popupmenu-items {
+  .u-columns-1-md .u-popupmenu-items {
     grid-template-columns: repeat(1, 100%);
   }
 }

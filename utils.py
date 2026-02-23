@@ -1,6 +1,20 @@
 import pickle 
 import sys
 import os
+import numpy as np
+
+def horizontal_projections(image):
+    """
+    Computes the horizontal projection of plack image pixels
+    """
+    return np.sum(image, axis=1) 
+
+
+def vertical_projections(image):
+    """
+    Computes the vertical projection of plack image pixels
+    """
+    return np.sum(image, axis=0) 
 
 def save_file(all_alignments, file_name): 
     with open(file_name, 'wb') as handle:

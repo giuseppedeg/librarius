@@ -1,0 +1,14 @@
+{
+    "port": 9564,
+    "mode": "chrome",
+
+    "margin_line": [0,10,0,100],
+    "margin_word": [10,10,10,10],
+    "margin_lines": [20,0,20,10],
+
+    "h_word_inview": 150,
+
+    "split_ch": "#",
+    "fuse_ch": "@",
+    "create_ch": "?"
+}

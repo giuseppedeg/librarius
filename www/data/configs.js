@@ -1,0 +1,5 @@
+const all_documents = ["001.jpg","019.jpg","Europeana.jpg","test_01_2.jpg","_test.jpg",]
+
+const all_ls_models = ["c:/Users/giuse/Desktop/work_in_progress/trascribre_assistant/models/line_segmenter/00_e0195.pth","c:/Users/giuse/Desktop/work_in_progress/trascribre_assistant/models/line_segmenter/01_e0090.pth","c:/Users/giuse/Desktop/work_in_progress/trascribre_assistant/models/line_segmenter/02_e0019.pth","c:/Users/giuse/Desktop/work_in_progress/trascribre_assistant/models/line_segmenter/0def_e0195.pth","c:/Users/giuse/Desktop/work_in_progress/trascribre_assistant/models/line_segmenter/e0019.pth","c:/Users/giuse/Desktop/work_in_progress/trascribre_assistant/models/line_segmenter/e0090.pth",]
+
+const all_trocr_models = ["c:/Users/giuse/Desktop/work_in_progress/trascribre_assistant/models/trocr/model_bentham","c:/Users/giuse/Desktop/work_in_progress/trascribre_assistant/models/trocr/model_custom","c:/Users/giuse/Desktop/work_in_progress/trascribre_assistant/models/trocr/model_IAM",]

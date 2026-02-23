@@ -1,9 +1,104 @@
+#my-logo{
+  margin: 10px 0px 0px 0px;
+}
 
+#tool-box{
+  height: 30px;
+  /* background-color: #478ac9;*/
+  width: 100%;
+}
+
+.tool-div{
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 3px;
+  cursor: pointer
+}
+
+.tool-div-delete{
+  background-image: url("/images/tools-ico/delete.png");
+  background-size: 35px;
+  pointer-events:none;
+  opacity: 0.3
+}
+
+.tool-div-correct{
+  background-image: url("/images/tools-ico/correct.png");
+  background-size: 35px;
+  pointer-events:none;
+  opacity: 0.3
+}
+
+.tool-div-clear{
+  background-image: url("/images/tools-ico/clear.png");
+  background-size: 35px;
+  pointer-events:none;
+  opacity: 0.3
+}
+
+.tool-div-transcribe{
+  background-image: url("/images/tools-ico/transcript.png");
+  background-size: 35px;
+  pointer-events:none;
+  opacity: 0.3
+}
+
+.tool-div-apply-transcripts{
+  background-image: url("/images/tools-ico/apply.png");
+  background-size: 35px;
+  pointer-events:none;
+  opacity: 0.3
+}
+
+
+
+.tool-div-home{
+  background-image: url("/images/tools-ico/home.png");
+  background-size: 35px;
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: #322b1c;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+
+  width: 120px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+  margin-top: 6px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.word-in-transcr{
+  display: inline-block;
+  margin-right: 6px;
+}
 
 #keyword_list{
     list-style: none;
     margin: 0;
     padding-left: 5px;
+    overflow-y: auto;
 }
 
 #keyword_list li {
@@ -11,6 +106,9 @@
     height: 40px;
     font-size: 25px;
     position: relative;
+    white-space: nowrap;
+    width: fit-content;
+    min-width: 100%;
 }
 
 #keyword_list li:hover {
@@ -102,9 +200,9 @@
 
 /* Immagini */
 #row_img_container{
-  overflow-x: scroll;
   text-align: center;
   margin-top: 10px;
+  margin-bottom: 5px;
   width: 98%;
   margin-left: 1%;
 }
@@ -112,6 +210,7 @@
 #img_row{
   max-height: 150px;
   min-height: 50px;
+  width: 100%;
 }
 
 #img_word{
@@ -121,7 +220,6 @@
 
 /* Top Menu Bar */
 
-   
   /* The subnavigation menu */
   .subnav {
     float: left;
@@ -149,11 +247,15 @@
   /* Style the subnav content - positioned absolute */
   .subnav-content {
     display: none;
-    position: absolute;
-    left: 0;
-    background-color: #B2BCC4;
-    width: 100%;
+    position: fixed;
+    background-color: #B2BCC4;;
+    width: 40%;
     z-index: 1;
+    color: #1f1f1f;
+    overflow-y: scroll;
+    height: 100%;
+    top: 0;
+    right: 0;
   }
   
   /* Style the subnav links */
@@ -164,6 +266,7 @@
     height: 50px;
     padding-top: 12px;
     padding-left: 15px;
+    width: 100%;
   }
   
   /* Add a grey background color on hover */
@@ -174,5 +277,287 @@
   
   /* When you move the mouse over the subnav container, open the subnav content */
   .subnav:hover .subnav-content {
-    display: grid;
+    display: block;
   } 
+
+
+  #funcs-in-menu{
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: inherit;
+  }
+
+
+  .funcs{
+    margin-bottom: 5px;
+    height: 35px;
+    width: 100%;
+  }
+
+  .delete-doc-btn{
+    background-color: #e40c0c;
+    width: 30px;
+    height: 30px;
+  }
+
+  .docs-in-menu{
+    display: flex;
+  }
+
+/* Segmentation Modal */
+/* ----------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------- */
+
+#cropModal {
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(71,78,93,0.75);
+
+  display:none; 
+  position:fixed; 
+  top:0; 
+  left:0; 
+  width:100%; 
+  height:100%; 
+  background:rgba(0,0,0,0.8); 
+  z-index:9999; 
+  justify-content:center; 
+  align-items:center;
+}
+
+#cropModal .modal-content {
+  background:white; 
+  padding:20px; 
+  border-radius:8px; 
+  text-align:center;
+  width: 75%;
+}
+
+#cropModal .inline-flex {
+  display: inline-flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+#cropModal .image-box{
+  position:relative; 
+  display:inline-block;
+  width: 75%;
+  max-height: 150px;
+  /* overflow: scroll; */
+  overflow: hidden;
+}
+
+#cropModal .image-box #cropImage{
+  cursor:crosshair; 
+  border:1px solid #ccc;
+  width: 100%;
+  max-height: 150px;
+  height: auto;
+  display: block;
+}
+
+#cropModal .image-box #guideLine{
+  position:absolute;
+  top:0;
+  width:2px;
+  height:100%;
+  background:#9b150b;
+  display:none; 
+  pointer-events:none;
+}
+
+#allTranscriptLabel{
+  font-style: italic;
+  color: #636363;
+}
+
+
+
+
+
+/* Delete Modal */
+/* ----------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------- */
+
+  * {box-sizing: border-box}
+
+/* Set a style for all buttons */
+.button-delete-doc {
+  background-color: #e40c0c;
+  color: white;
+  padding: 10px 0px;
+  border: none;
+  cursor: pointer;
+  width: 80px;
+  opacity: 0.8;
+  text-align: center;
+  margin-right: 10px;
+  border-radius: 9px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.button-delete-doc:hover {
+  opacity:1;
+}
+
+/* Float cancel and delete buttons and add an equal width */
+.cancelbtn, .deletebtn, .okbtn {
+  border-width: 1px;
+  border-radius: 10px;
+  border-block-color: black;
+  width: 250px;
+}
+
+/* Add a color to the cancel button */
+.cancelbtn {
+  background-color: #ccc;
+  color: black;
+  margin-right: 4%;
+}
+
+/* Add a color to the delete button */
+.deletebtn {
+  background-color: #e40c0c;
+}
+
+.okbtn {
+  background-color: #09b91b;
+}
+
+/* Add padding and center-align text to the container */
+.container {
+  padding: 16px;
+  text-align: center;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(71,78,93,0.75);
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  border-radius: 25px;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* The Modal Close Button (x) */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+  color: #e40c0c;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and delete button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .deletebtn, .okbtn {
+    width: 100%;
+  }
+}
+
+
+
+/* OPTION SECTION ------------------------------------ */
+/* --------------------------------------------------- */
+
+#options{
+  padding-left: 30px;
+  padding-top: 11px;
+  min-height: 400px;
+  margin-top: 100px;
+  color: #ffffff;
+  background-color: #333333
+}
+
+.options-cont{
+  padding: 5px;
+  margin-right: 20px;
+  margin-bottom: 25px;
+  min-width: 375px;
+}
+
+.options-cont div{
+  margin-bottom: 15px;
+}
+
+.options-cont select, .options-cont input {
+  color:black;
+}
+
+.options-cont select::placeholder, .options-cont input::placeholder {
+  color:black;
+}
+
+
+/* LOADER         ------------------------------------ */
+/* --------------------------------------------------- */
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 4px solid #478ac9;
+  border-right: 4px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border-left: 4px solid #e40c0c;
+  border-bottom: 4px solid transparent;
+  animation: rotation 0.5s linear infinite reverse;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 

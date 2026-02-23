@@ -1,1 +1,0 @@
-const all_documents = ["001.jpg",]

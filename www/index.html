@@ -5,18 +5,19 @@
     <meta name="keywords" content="When it absolutely, positively has to be readability in your designs">
     <meta name="description" content="">
 
-    <title>Librarius</title>
+    <title>HandBiblio</title>
     <link rel="shortcut icon" href="images\icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/nicepage.css" media="screen">
     <link rel="stylesheet" href="css/Home.css" media="screen">
     <link rel="stylesheet" href="css/my_style.css" media="screen">
     <script class="u-script" type="text/javascript" src="data/keyword_list.js" defer=""></script>
-    <script type="text/javascript" src="data/documents.js" defer=""></script>
+    <script type="text/javascript" src="data/configs.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="js/create_docs_menu.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="js/python_comunicator.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="js/jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="js/nicepage.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="js/filter_list.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="js/crop_segmentation_popup.js" defer=""></script>
     <script src="eel.js"></script>
 
     
@@ -36,48 +37,308 @@
     <meta property="og:title" content="Home">
     <meta property="og:type" content="website">
   <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
-  <body data-home-page="Home.html" data-home-page-title="Home" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-palette-1-light-3 u-header" id="sec-3437"><div class="u-clearfix u-sheet u-sheet-1">
-        <a href="#" class="u-image u-logo u-image-1">
+  <body data-home-page="Home.html" data-home-page-title="Home" class="u-body u-xl-mode" data-lang="en">
+    
+
+    <!-- ----- ALL MODALS ----------------------------------------------  -->
+    <!-- ---------------------------------------------------------------  -->
+
+    <!-- MODAL TO CORRECT SEGMENTATION - CROP -->
+    <!-- <div id="cropModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;"> -->
+    <div id="cropModal">
+    <div class="modal-content">
+        <!-- <div class="inline-flex"> -->
+        <div>
+          <p>Entire Transcription: </p>
+          <p id="allTranscriptLabel">All Transcripts</p>
+        </div>
+          <div>
+          <p>Cut After: </p>
+          <h3 id="transcriptLabel">Transcription</h3>
+        </div>
+        
+        
+        <div class="image-box">
+          <img id="cropImage" onclick="handleImageClick(event)">
+          <div id="guideLine"></div>
+        </div>
+        
+        <p>Click on image to define the crop border.</p>
+        <button onclick="cancelProcess()" style="background-color: #9b150b; color: white;">Cancel</button>
+        <button onclick="confirmCrop()">OK</button>
+
+    </div>
+    </div>
+
+
+
+    <!-- MODAL TO LOAD NEW DOCUMENT -->
+    <div id="modal-load-document" class="modal" >
+      <!-- <span onclick="document.getElementById('modal-del-cleartrans').style.display='none'" class="close" title="Close Modal">&times;</span> -->
+      <form class="modal-content" action="">
+        <div class="container">
+          <h2>Uploading New Document</h2>
+          <p>Uploading a new document to the collection.</p>
+          <p>This may take a few seconds...</p>
+          <div class="clearfix">
+            <!-- <progress id="file" value="32" max="100"> 32% </progress> -->
+            <span class="loader"></span>
+            <div>
+            <span class="minutes">00</span>:<span class="seconds">00</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    
+    <!-- MODAL TO RUN THE HTR NETWORK -->
+    <div id="modal-create-transcripts" class="modal" >
+      <!-- <span onclick="document.getElementById('modal-del-cleartrans').style.display='none'" class="close" title="Close Modal">&times;</span> -->
+      <form class="modal-content" action="">
+        <div class="container">
+          <h2>Transcription in Progress</h2>
+          <p>Creating transcription options using the selected HTR template.</p>
+          <p>This may take a few minutes...</p>
+          <div class="clearfix">
+            <!-- <progress id="file" value="32" max="100"> 32% </progress> -->
+            <span class="loader"></span>
+            <div>
+            <span class="minutes">00</span>:<span class="seconds">00</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- MODAL TO DELETE A WORD IMAGE -->
+    <div id="modal-del-word" class="modal", data-confirm="d_delete_current_word">
+      <span onclick="document.getElementById('modal-del-word').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <form class="modal-content" action="">
+        <div class="container">
+          <h2>Delete Word Image</h2>
+          <p>Are you sure you want to delete the work image?</p>
+          <div class="clearfix">
+            <button type="button" class="cancelbtn"  onclick="closeAllModals()" >Cancel</button>
+            <button type="button" class="deletebtn" onclick="delete_current_word()">Delete</button>
+            <!-- <button type="submit" class="deletebtn">Delete</button> -->
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- MODAL TO CLEAN ALL TRANSCRIPTS OPTIONS -->
+    <div id="modal-del-cleartrans" class="modal">
+      <span onclick="document.getElementById('modal-del-cleartrans').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <form class="modal-content" action="">
+        <div class="container">
+          <h2>Clear Transcrition Options</h2>
+          <p>Are you sure you want to delete all transcription options?</p>
+          <div class="clearfix">
+            <button type="button" class="cancelbtn"  onclick="document.getElementById('modal-del-cleartrans').style.display='none'" >Cancel</button>
+            <button type="button" class="deletebtn" onclick="clear_transcripts()">Delete</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- MODAL TO APPLY ALL TRANSCRIPTS OPTIONS -->
+    <div id="modal-apply-trans" class="modal">
+      <span onclick="document.getElementById('modal-apply-trans').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <form class="modal-content" action="">
+        <div class="container">
+          <h2>Apply the Generated Transcription</h2>
+          <p>This option will apply the first automatically generated transcription option to all words found in the document.</p>
+          <p>Are you sure you want to continue?</p>
+          <div class="clearfix">
+            <button type="button" class="cancelbtn"  onclick="document.getElementById('modal-apply-trans').style.display='none'" >Cancel</button>
+            <button type="button" class="okbtn" onclick="apply_transcription()">Ok</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- MODAL TO ASK TO CONTINUE -->
+    <div id="modal-del-doc" class="modal">
+      <span onclick="document.getElementById('modal-del-doc').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <form class="modal-content" action="">
+        <div class="container">
+          <h2>Delete Document</h2>
+          <div id="id-img-to-delete"></div>
+          <p>Are you sure you want to delete the document?</p>
+    
+          <div class="clearfix">
+            <button type="button" class="cancelbtn"  onclick="document.getElementById('modal-del-doc').style.display='none'" >Cancel</button>
+            <button type="button" class="deletebtn" onclick="deleteImage()">Delete</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const ModalActions = {
+          d_delete_current_word: () => {
+              console.log("Cancellazione parola...");
+              // Logica per cancellare
+              // event.preventDefault(); 
+              delete_current_word(); 
+              console.log("Cancellazione parola ESEGUITA");
+              closeAllModals();
+          },
+          delete_document: () => {
+              console.log("Cancellazione documento...");
+              // Logica per cancellare doc
+              closeAllModals();
+          },
+          update_transcript: () => {
+              // Logica per update
+              closeAllModals();
+          }
+      };
+
+      window.addEventListener('keydown', function(event) {
+          if (event.key === "Enter") {
+              // 1. Cerchiamo la modale attualmente visibile
+              // (Assumiti che le modali aperte abbiano display: block o una classe .active)
+              const activeModal = Array.from(document.querySelectorAll('.modal'))
+                                      .find(m => m.style.display === 'block');
+
+              if (activeModal) {
+                  event.preventDefault();
+                  
+                  // 2. Recuperiamo il nome della funzione dal data-attribute
+                  const actionName = activeModal.getAttribute('data-confirm');
+                  
+                  // 3. Eseguiamo la funzione corrispondente se esiste nel Registry
+                  if (actionName && ModalActions[actionName]) {
+                      ModalActions[actionName]();
+                  }
+              } 
+          }
+          
+          // Bonus: Gestione tasto ESC per chiudere tutto
+          if (event.key === "Escape") {
+              closeAllModals();
+          }
+      });
+
+      function closeAllModals() {
+          document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+          const input = document.getElementById('text_input');
+          input.focus();
+          const val = input.value;
+          input.value = '';
+          input.value = val;
+      }
+    </script>
+
+    <!-- ---------------------------------------------------------------  -->
+    <!-- ---------------------------------------------------------------  -->
+    <!-- ---------------------------------------------------------------  -->
+
+
+
+
+
+
+
+
+
+
+
+    <header class="u-clearfix u-header u-palette-1-light-3 u-header" id="sec-3437">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <a href="#" class="u-image u-logo u-image-1" id="my-logo">
           <img src="images/default-logo.png" class="u-logo-image u-logo-image-1">
         </a>
+        
+        <!-- 
         <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
           <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
             <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
               <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
-              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
-</g></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect></g></svg>
             </a>
           </div>
 
-          <!--  TOP MENU -->
           <div class="u-nav-container">
             <ul class="u-nav u-unstyled u-nav-1">
               <li class="u-nav-item">
                 <div class="subnav">
                   <a class="subnavbtn u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" style="padding: 10px 20px;" onclick="load_word()">Load a Page</a>             
                   <div class="subnav-content" id="subnav-content-documents">                   
-                    <!-- <a  href="#" onclick="load_word()">Page TEST</a> -->
+                    
+                    <div id="funcs-in-menu">
+                      <button class="funcs" type="button" onclick="uploadImage()">New Document</button>
+                      <a class="docs-in-menu" href="#" onclick="load_document('002.jpg')">Page 002.jpg</a>
+                    </div>
                   </div>
                 </div>
               </li>            
             </ul>
-          </div>
-          
-          
+          </div>         
 
           <div class="u-nav-container-collapse">
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
               <div class="u-inner-container-layout u-sidenav-overflow">
                 <div class="u-menu-close"></div>
                 <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2" id="subnav-small-content-documents">
-                   <!-- <li class="u-nav-item"><a class="u-button-style u-nav-link" onclick="load_word()>puff</a></li> -->
+                   <li class="u-nav-item"><a class="u-button-style u-nav-link" onclick="load_word()">puff</a></li>
                 </ul>
               </div>
             </div>
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
-        </nav>
-      </div></header>
+        </nav> 
+        -->
+
+        <div class=" u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <ul class="u-nav u-unstyled u-nav-1">
+            <li class="u-nav-item">
+              <div class="subnav">
+                <a class="subnavbtn u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" style="padding: 10px 20px;" onclick="load_word()">Load a Page</a>             
+                
+                <div class="subnav-content" id="subnav-content-documents">      
+                  
+                  <div id="funcs-in-menu">
+                    <button class="funcs" type="button" onclick="uploadImage()">New Document</button>
+                  </div>
+
+                  <div id="subnav-content-documents-list"></div>
+                  
+                  <!-- <div class="docs-in-menu">
+                    <a class="link-to-doc" href="#" onclick="load_document('002.jpg')">XXX.jpg</a>
+                    <button class="button-delete-doc" onclick="deleteImage_ask('002.jpg')">Delete</button>
+                  </div> -->
+
+                </div>
+              </div>
+            </li>            
+          </ul>
+        </div>
+
+        <div id="toolbox-menu">
+          <a onclick="load_home()" id="home-tool" class="tool-div tool-div-home tooltip"> 
+            <span class="tooltiptext">Close Document</span></a>
+          <a onclick="delete_current_word_ask()" id="delete-tool" class="tool-div tool-div-delete tooltip">
+            <span class="tooltiptext">Delete Word</span></a>
+          <a onclick="correct_segmentation()" id="correct-tool" class="tool-div tool-div-correct tooltip"> 
+            <span class="tooltiptext">Correct Segmentation</span></a>
+          <a onclick="transcribe()" id="transcribe-tool" class="tool-div tool-div-transcribe tooltip"> 
+            <span class="tooltiptext">Generate Transcription Options</span></a>
+          <a onclick="clear_transcripts_ask()" id="clear-tool" class="tool-div tool-div-clear tooltip"> 
+            <span class="tooltiptext">Clean Transcription Options</span></a>
+          <a onclick="apply_transcription_ask()" id="apply-trans-tool" class="tool-div tool-div-apply-transcripts tooltip"> 
+              <span class="tooltiptext">Apply Generated Transcription</span></a>
+          
+
+        </div>
+
+
+      </div>
+  
+    </header>
+
+      
 
 
 
@@ -91,6 +352,7 @@
   </div>
 
     <section class="u-clearfix u-section-1" id="sec-6e13">
+
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <div class="u-clearfix u-expanded-width u-gutter-2 u-layout-wrap u-layout-wrap-1">
           <div class="u-layout">
@@ -103,12 +365,26 @@
                       <!-- Immagine Parola-->
                       <img class="u-align-center u-image u-image-default u-image-2" id="img_word" 
                       src="images/word_example.png" alt="" data-image-width="400" data-image-height="150">
+                                           
                       <!-- Aggiungi Input-->
                       <div id="text-input-container">
                         <div id ="text_input_div">
-                          <input id="text_input" placeholder="Inserisci la Trascrizione" type="text" onkeyup="filter_list()" onkeydown="start_instert_transcription()">
+                          <input id="text_input" placeholder="Inserisci la Trascrizione" type="text" onkeydown="start_instert_transcription()">
+                          <!-- FILTER THE OPTION LIST ACCORDING TO THE INPUT
+                          <input id="text_input" placeholder="Inserisci la Trascrizione" type="text" onkeyup="" onkeydown="start_instert_transcription()">
+                          -->
                         </div>
-                        <a onclick="send_transcript_by_ok('OK')" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1" id="ok_transc_btn" >ok</a>
+                        <a onclick="send_transcript_by_ok('OK')" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1 tooltip" id="ok_transc_btn" >
+                          ok</a>
+                        <!-- <a onclick="delete_current_word_ask()" id="delete-tool" class="tool-div tool-div-delete tooltip">
+                          <span class="tooltiptext">Delete Word</span></a>
+                        <a onclick="correct_segmentation()" id="correct-tool" class="tool-div tool-div-correct tooltip"> 
+                          <span class="tooltiptext">Correct Segmentation</span></a>
+                        <a onclick="clear_transcripts_ask()" id="clear-tool" class="tool-div tool-div-clear tooltip"> 
+                          <span class="tooltiptext">Clean Transcription Options</span></a>
+                        <a onclick="transcribe()" id="transcribe-tool" class="tool-div tool-div-transcribe tooltip"> 
+                          <span class="tooltiptext">Generate Transcription Options</span></a> -->
+
                           <script>
                             var input = document.getElementById("text_input");
                             input.addEventListener("keypress", function(event) {
@@ -118,14 +394,19 @@
                                 window.new_transcription = false;
                                 eel.stop_previousword_timer();
                               }
-                              if (event.key === "Enter") {
-                                event.preventDefault();
-                                send_transcript_by_ok('KEY_ENTER');
-                              }
-                              if (event.key === " ") {
-                                event.preventDefault();
-                                send_transcript_by_ok('KEY_SPACE');
-                                //document.getElementById("ok_transc_btn").click();
+                              const activeModal = Array.from(document.querySelectorAll('.modal'))
+                                      .find(m => m.style.display === 'block');
+
+                              if (!activeModal){
+                                if (event.key === "Enter") {
+                                  event.preventDefault();
+                                  send_transcript_by_ok('KEY_ENTER');
+                                }
+                                if (event.key === " ") {
+                                  event.preventDefault();
+                                  send_transcript_by_ok('KEY_SPACE');
+                                  //document.getElementById("ok_transc_btn").click();
+                                }
                               }
                             });
                         </script>
@@ -138,7 +419,7 @@
                 <div class="u-layout-row">
                   <div class="u-container-style u-layout-cell u-radius-10 u-shape-round u-size-44 u-layout-cell-2">
                     <div class="u-border-1 u-border-grey-60 u-container-layout u-container-layout-2" id="transcript_textarea_container">
-                      <h2 class="u-text u-text-default u-text-1" id="transcript_textarea">
+                      <h2 class="u-text u-text-default u-text-1" id="transcript_textarea" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false">
                       </h2>
                     </div>
                   </div>
@@ -184,9 +465,48 @@
     </section>
     
     
+    <section id="options">
+      <div class="u-layout-row">
+        
+        <div class="options-cont">
+          <form>
+            <h6>General Options</h6>
+            <div>
+              <label for="select-language">Language:</label>
+              <select id="select-language" name="select-language">              
+                <option value="eng">English</option>
+                <option value="ita">Italiano</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="select-ls-model">Line Segmentation Method:</label>
+              <select id="select-ls-model" name="select-ls-model">              </select>
+            </div>
+            
+            <div>
+              <label for="select-HTR-model">HTR Model:</label>
+              <select id="select-HTR-model" name="select-HTR-model">              </select>
+            </div>
+            
+            <div>
+              <label for="select-num-options">Number of Transcript Options:</label>
+              <input type="number" id="select-num-options" name="select-num-options"  value="3" min="1" max="10" placeholder="3">
+            </div>
+            
+          </form>
+        </div>
+
+      </div>
+    </section>
+    
 <!-- Footer -->
-    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-576b"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-small-text u-text u-text-variant u-text-1">--- KWS Out Selector ---</p>
-      </div></footer>
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-576b">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">--- HandBiblio: The transciption assistant. ---</p>
+
+        
+      </div>
+    </footer>
   
 </body></html>

@@ -6,7 +6,7 @@ The script provide a CML interface to modify direclty a .als file
 """
 
 
-ALIGNMENT_FILE = "data/alignments/001.als"
+ALIGNMENT_FILE = "data/alignments/_test.als"
 OUT_FOLDER = "data/new_alignments"
 OUT_FILENAME = "new_001.als"
 

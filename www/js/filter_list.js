@@ -1,7 +1,7 @@
 //var all_keywords = ["lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato", "domenica"]
 
 var max_transcripts_options = 20
-
+var MAX_ELEM_IN_LIST_INPUT = 10
 
 /* Filtra la lista di keyword sulla destra in base alle lettere inserite nel campo di testo*/
 function filter_list() {
@@ -39,6 +39,7 @@ function autocomplete(inp, arr) {
 
     var currentFocus;
     
+    
     /*execute a function when someone writes in the text field:*/
     inp.addEventListener("input", function(e) {
         var a, b, i, val = this.value;
@@ -57,8 +58,9 @@ function autocomplete(inp, arr) {
         this.parentNode.appendChild(a);
 
         // filtriamo la lista tenendo conto delle lettere inserite nel textfield
+        let matched_elems = 0
         for (i = 0; i < arr.length; i++) {
-          if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          if (matched_elems <= MAX_ELEM_IN_LIST_INPUT  && arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
             // Creiamo un DIV per ogni elemento che matcha
             b = document.createElement("DIV");
             b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
@@ -72,6 +74,7 @@ function autocomplete(inp, arr) {
                 closeAllLists();
             });
             a.appendChild(b);
+            matched_elems = matched_elems + 1;
           }
         }
     });
@@ -80,18 +83,23 @@ function autocomplete(inp, arr) {
     inp.addEventListener("keydown", function(e) {
         var x = document.getElementById(this.id + "autocomplete-list");
         if (x) x = x.getElementsByTagName("div");
-        if (e.keyCode == 40) { //DOWN
+        
+        if (e.keyCode == 9) { //DOWN
+          e.preventDefault();
           currentFocus++;
           addActive(x);
         } else if (e.keyCode == 38) { //UP
           currentFocus--;
           addActive(x);
-        } else if (e.keyCode==9 || e.keyCode==39) { //TAB //RIGHT
+        } else if (e.keyCode==13) { //TAB
           e.preventDefault();
           if (currentFocus > -1) {
             if (x) x[currentFocus].click();
+          }else{
+            document.getElementById("ok_transc_btn").click()
           }
-        } 
+        }
+
         /*else if (e.keyCode == 13) { //ENTER  --- invia?=?
             e.preventDefault();
             if (currentFocus > -1) {

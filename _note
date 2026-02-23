@@ -4,8 +4,84 @@ pip install https://github.com/pyinstaller/pyinstaller/archive/develop.zip
 # Windows ----
 
 pyinstaller --noconfirm --console --onefile  --icon "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\assets\icon.ico" --add-data "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\www;www/"  "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\GUI.py"
-pyinstaller --noconfirm --windowed --onefile  --icon "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\assets\icon.ico" --add-data "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\www;www/"  "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\GUI.py"
+
+pyinstaller --noconfirm --windowed --onefile  --icon "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\assets\new_icon\icon.ico" --add-data "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\www;www/"  "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\GUI.py"  --name Librarius
+
+-> NEW
+
+pyinstaller --noconfirm --windowed --onefile  --icon "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\assets\new_icon\icon.ico" --add-data "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\www;www/"
+--add-data "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\trocr;trocr/"
+--add-data "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\dicts;dicts/" --add-data "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\models;models/"  "C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\GUI.py"  --name HandBiblio
+
+## piinstaller error
+
+'''
+in _get_const_info    argval = const_list[const_index] IndexError: tuple index out of range
+'''
+
+This is a Python 3.10 issue. To fix it: You have to go to the folder "Python310\Lib" and edit the file 'dis.py'. In the 'dis.py' file you have to find this "def _unpack_opargs" and inside the else statement write a new line with this: "extended_arg = 0", then save the file.
+
+I did something like that:
+
+else:
+    arg = None
+    extended_arg = 0 
+yield (i, op, arg)
+
+
+## possiamo provare NUTIKA
+
+nutika è un compiler che possiamo usare per generare il file exe
+
+
+
+
+python -m nuitka --follow-imports --onefile --include-package=trocr --include-distribution-metadata=torchaudio --windows-icon-from-ico=C:\Users\degreg0000\Desktop\work_in_progres\trascribre_assistant\assets\new_icon\predict\icon.png predict_als.py
+
+--disable-console
 
 
 # MacOS ------
 pyinstaller GUI.py --noconsole --onefile  --icon "/Users/giuseppe/Desktop/librarius/assets/new_icon/icon.ico" --add-data "/Users/giuseppe/Desktop/librarius/www:www/" 
+
+https://www.infoworld.com/article/2336736/intro-to-nuitka-a-better-way-to-compile-and-distribute-python-applications.html
+
+
+
+
+
+___________________________________________________________
+self.all_boxes
+    è la list adi BB della riga corrente.
+    Può essere composto de BB a due valori a a quattro velori:
+       - [x0, x1]
+       - [x0, y0, x1, y1]
+    
+    Se i box sono due, bisognerebbe riportarli al formato a 4
+
+
+
+POSSIAMO PROVARE HANDPRINT
+   Handprint è un servizion che rende disponibili in python 
+   diversi servizio di HTR di diversi provider (Google, Azure, Amazon)
+
+https://pypi.org/project/handprint/
+
+
+## nuova interfaccia
+
+Mi serve un framework piu stabile
+sarebbe il caso di utilizzare un approccio python nativo: pyQT 
+https://www.youtube.com/watch?app=desktop&v=adC48qZ8p5Y
+
+
+## Dizionari
+
+perole piu frequenti nelle lingue 
+
+https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists
+
+https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Italian50k
+
+
+238
